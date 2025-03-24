@@ -14,7 +14,7 @@ const CodeSubmissionForm = () => {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
   }, []);
-  
+
   useEffect(() => {
     if (review) {
       setTimeout(() => {
@@ -87,6 +87,13 @@ const CodeSubmissionForm = () => {
           value={code}
           onChange={(e) => setCode(e.target.value)}
         />
+        <style>
+          {`textarea::placeholder {
+              font-size: 15px;
+              color: #bbb;
+            }`
+          }
+        </style>
         <div style={{ marginBottom: "10px" }}>
           <label style={{ fontSize: "16px", fontWeight: "bold" }}>Select Language</label>
           <select
