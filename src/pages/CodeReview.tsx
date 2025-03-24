@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CodeSubmissionForm from "../components/CodeSubmissionForm";
 
 const CodeReview = () => {
-  const fullText = "Submit your code below and receive valuable feedback from our next-gen AI.";
+  const fullText = "Submit your code below and gain insightful feedback from our next-gen AI! ✨";
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
 
@@ -11,7 +11,7 @@ const CodeReview = () => {
       const timeout = setTimeout(() => {
         setText(fullText.slice(0, index + 1));
         setIndex(index + 1);
-      }, 35);
+      }, 30);
       return () => clearTimeout(timeout);
     }
   }, [index, fullText]);
@@ -23,20 +23,20 @@ const CodeReview = () => {
       alignItems: "center", 
       height: "100vh", 
       width: "100vw", 
-      backgroundColor: "#f4f4f4",
+      backgroundColor: "#333",
       fontFamily: "'Playfair Display', serif"
     }}>
       <div style={{ textAlign: "center" }}>
         <h1 style={{ fontSize: "2rem", fontWeight: "bold", color: "#333" }}>
           AI Code Review
         </h1>
-        <p style={{ fontSize: "1.2rem", color: "#666", marginBottom: "20px" }}>
+        <p style={{ fontSize: "1.1rem", color: "#fff", marginBottom: "20px" }}>
           {text}
           <span style={{
             display: "inline-block",
-            width: "8px",
-            height: "20px",
-            backgroundColor: "#666",
+            width: "7px",
+            height: "19px",
+            backgroundColor: "#fff",
             marginLeft: "5px",
             animation: "blink 1s infinite"
           }}></span>

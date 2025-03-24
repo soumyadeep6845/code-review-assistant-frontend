@@ -112,28 +112,46 @@ const CodeSubmissionForm = () => {
             <option value="Java">Java</option>
             <option value="Python">Python</option>
             <option value="JavaScript">JavaScript</option>
+            <option value="TypeScript">TypeScript</option>
             <option value="C++">C++</option>
+            <option value="Rust">Rust</option>
+            <option value="C#">C#</option>
+            <option value="C">C</option>
+            <option value="SQL">SQL (Structured Query Language)</option>
+            <option value="HQL">HQL (Hibernate Query Language)</option>
+            <option value="PLSQL">PL/SQL</option>
+            <option value="GraphQL">GraphQL </option>
+            <option value="Golang">Go(Golang)</option>
+            <option value="Kotlin">Kotlin</option>
+            <option value="Swift">Swift</option>
+            <option value="Dart">Dart</option>
+            <option value="Ruby">Ruby</option>
+            <option value="PHP">PHP</option>
+            <option value="Scala">Scala</option>
+            <option value="Haskell">Haskell</option>
+            <option value="Erlang">Erlang</option>
+            <option value="Closure">Closure</option>
           </select>
         </div>
         <button
           style={{
-            width: "100%",
+            width: "34%",
             padding: "10px",
-            backgroundColor: "#6a0dad",
+            backgroundColor: "#4CAF50",
             color: "white",
             border: "none",
-            borderRadius: "5px",
+            borderRadius: "25px",
             cursor: "pointer",
             fontSize: "16px",
             fontWeight: "bold",
             transition: "all 0.3s ease",
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = "#5a0ca5";
-            e.currentTarget.style.transform = "scale(1.02)";
+            e.currentTarget.style.backgroundColor = "#388E3C";
+            e.currentTarget.style.transform = "scale(1.05)";
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = "#6a0dad";
+            e.currentTarget.style.backgroundColor = "#4CAF50";
             e.currentTarget.style.transform = "scale(1)";
           }}
           onClick={handleSubmit}
