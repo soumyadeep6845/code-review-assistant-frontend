@@ -5,6 +5,7 @@ import "../App.css";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
+  const [isLogoutHovered, setIsLogoutHovered] = useState(false);
 
   const handleGetStarted = () => {
     navigate("/review");
@@ -17,6 +18,20 @@ const Home: React.FC = () => {
 
   return (
     <div style={styles.container}>
+      {/* Logout Button */}
+      <button
+        style={
+          isLogoutHovered
+            ? { ...styles.logoutButton, ...styles.logoutButtonHovered }
+            : styles.logoutButton
+        }
+        onClick={handleLogout}
+        onMouseEnter={() => setIsLogoutHovered(true)}
+        onMouseLeave={() => setIsLogoutHovered(false)}
+      >
+        {isLogoutHovered ? "<< Logout" : "Logout"}
+      </button>
+      
       <div style={styles.headerContainer}>
         <h1 style={styles.heading}>Welcome to AI Code Review</h1>
         <p style={styles.subheading}>
@@ -33,12 +48,7 @@ const Home: React.FC = () => {
       >
         {isHovered ? "Get Started >>" : "Get Started"}
       </button>
-
-      {/* Logout Button */}
-      <button style={styles.logoutButton} onClick={handleLogout}>
-        Logout
-      </button>
-
+      
       {/* Copyright Notice */}
       <div style={styles.footer}>
         <p style={styles.copyright}>© 2025 Soumyadeep Das</p>
@@ -59,6 +69,7 @@ const styles = {
     fontFamily: "'Playfair Display', serif",
     textAlign: "center" as "center",
     margin: 0,
+    position: "relative" as "relative",
   },
   headerContainer: {
     marginBottom: "40px",
@@ -98,15 +109,24 @@ const styles = {
     boxShadow: "0 0 15px rgba(56, 142, 60, 1)",
   },
   logoutButton: {
+    position: "absolute" as "absolute",
+    top: "20px",
+    right: "20px",
     backgroundColor: "#E74C3C",
     color: "#fff",
-    fontSize: "16px",
+    fontSize: "13px",
     padding: "12px 24px",
     border: "none",
     borderRadius: "30px",
     cursor: "pointer",
-    transition: "background-color 0.3s ease, transform 0.3s ease",
+    transition: "background-color 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
     boxShadow: "0 0 10px rgba(231, 76, 60, 0.8)",
+    animation: "fadeIn 1.5s ease-in",
+  },
+  logoutButtonHovered: {
+    backgroundColor: "#C0392B",
+    transform: "scale(1.1)",
+    boxShadow: "0 0 15px rgba(192, 57, 43, 1)",
   },
   footer: {
     position: "absolute" as "absolute",

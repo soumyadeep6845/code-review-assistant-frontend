@@ -30,7 +30,7 @@ const CodeSubmissionForm = () => {
     }
     setLoading(true);
     try {
-      const userId = "user123";
+      const userId = "user123"; //HAS TO BE CHANGED
       const payload: CodeSubmission = { userId, code, language };
       const response = await apiClient.post<CodeSubmission>("/submit", payload);
       if (response.status === 200) {
