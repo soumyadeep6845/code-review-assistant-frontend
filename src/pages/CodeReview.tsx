@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CodeSubmissionForm from "../components/CodeSubmissionForm";
+import CodeSubmissionForm from "./CodeSubmissionForm";
 
 const CodeReview = () => {
   const fullText = "Submit your code below and gain insightful feedback from our next-gen AI! ✨";
