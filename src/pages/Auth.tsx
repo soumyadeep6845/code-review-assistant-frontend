@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react"; // Importing icons
 import CodeImage from "../assets/CODE.png";
-import "./Auth.css"; 
+import "./Auth.css";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Auth = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const Auth = () => {
     setLoading(true);
 
     const endpoint = isLogin ? "/auth/login" : "/auth/register";
-    const body = isLogin 
+    const body = isLogin
       ? { email, password }
       : { username: email.split("@")[0], email, password };
 
@@ -76,22 +78,36 @@ const Auth = () => {
         <h2 style={styles.heading}>Code Review AI</h2>
         {error && <p style={styles.errorText} className={shakeEffect ? "shake" : ""}>{error}</p>}
         <form onSubmit={handleSubmit} style={styles.form}>
+
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={styles.input}
+            style={{ ...styles.input, ...(email ? inputFocusStyle : {}) }}
+            onFocus={(e) => (e.target.style.boxShadow = inputFocusStyle.boxShadow)}
+            onBlur={(e) => (e.target.style.boxShadow = "none")}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={styles.input}
-          />
+          <div style={styles.passwordContainer}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={{ ...styles.passwordInput, ...(password ? inputFocusStyle : {}) }}
+              onFocus={(e) => (e.target.style.boxShadow = inputFocusStyle.boxShadow)}
+              onBlur={(e) => (e.target.style.boxShadow = "none")}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={styles.eyeButton}
+            >
+              {showPassword ? <EyeOff size={17} color="#fff" /> : <Eye size={17} color="#fff" />}
+            </button>
+          </div>
           <button type="submit" style={styles.button} disabled={loading}>
             {loading ? <div className="loader"></div> : isLogin ? "Login" : "Register"}
           </button>
@@ -105,6 +121,11 @@ const Auth = () => {
       </motion.div>
     </div>
   );
+};
+
+const inputFocusStyle = {
+  boxShadow: "0 0 8px rgba(0, 123, 255, 0.7)",
+  borderColor: "#007BFF",
 };
 
 const styles = {
@@ -151,6 +172,36 @@ const styles = {
     background: "#555",
     borderRadius: "5px",
     outline: "none",
+    width: "94%",
+    transition: "box-shadow 0.3s ease",
+  },
+  passwordContainer: {
+    display: "flex",
+    alignItems: "center",
+    position: "relative" as "relative",
+  },
+  passwordInput: {
+    flex: 1,
+    padding: "10px",
+    fontSize: "16px",
+    border: "1px solid #ccc",
+    background: "#555",
+    borderRadius: "5px",
+    outline: "none",
+    width: "100%",
+    paddingRight: "40px",
+    transition: "box-shadow 0.3s ease",
+  },
+  eyeButton: {
+    position: "absolute" as "absolute",
+    right: "-5px",
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    outline: 0,
   },
   button: {
     background: "#007BFF",
