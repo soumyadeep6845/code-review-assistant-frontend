@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import CodeImage from "../assets/CODE.png";
-import "./Auth.css";  // Import the CSS file
+import "./Auth.css"; 
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -29,20 +30,20 @@ const Auth = () => {
         body: JSON.stringify(body),
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Introduce delay
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       const textData = await response.text();
       try {
         const jsonData = JSON.parse(textData);
 
         if (response.ok) {
           localStorage.setItem("token", jsonData.token);
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // Add extra delay for better UX
+          await new Promise((resolve) => setTimeout(resolve, 1000));
           navigate("/");
         } else {
           setError(jsonData.error || "Something went wrong");
           setShakeEffect(true);
-          setTimeout(() => setShakeEffect(false), 300); // Reset shake effect
+          setTimeout(() => setShakeEffect(false), 300);
         }
       } catch {
         if (response.ok) {
@@ -65,7 +66,12 @@ const Auth = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.authBox}>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        style={styles.authBox}
+      >
         <img src={CodeImage} alt="Code Logo" style={styles.logo} />
         <h2 style={styles.heading}>Code Review AI</h2>
         {error && <p style={styles.errorText} className={shakeEffect ? "shake" : ""}>{error}</p>}
@@ -96,7 +102,7 @@ const Auth = () => {
             {isLogin ? " Register" : " Login"}
           </span>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };
