@@ -13,7 +13,7 @@ const Home: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the JWT token
-    navigate("/auth"); // Redirect to the authentication page
+    window.location.href = "/auth"; // Redirect to authentication page
   };
 
   return (

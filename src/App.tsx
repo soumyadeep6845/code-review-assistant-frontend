@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import CodeReview from "./pages/CodeReview";
 import NotFound from "./pages/NotFound";
@@ -6,22 +6,26 @@ import { ToastContainer } from "react-toastify";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
+
 function App() {
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
     <Router>
       <ToastContainer />
       <Routes>
-        {/* Public Route for Authentication */}
-        <Route path="/auth" element={<Auth />} />
+        {/* Public Authentication Route */}
+        <Route path="/auth" element={isAuthenticated ? <Navigate to="/" replace /> : <Auth />} />
 
-        {/* Protected Routes (only accessible if logged in) */}
-          <Route element={<ProtectedRoute />}>
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/review" element={<CodeReview />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
-        {/* Catch-all for invalid URLs */}
-        <Route path="*" element={<NotFound />} />
+        {/* Default Redirect for Unmatched Routes */}
+        <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     </Router>
   );

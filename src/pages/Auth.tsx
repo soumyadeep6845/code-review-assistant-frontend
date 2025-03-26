@@ -19,43 +19,28 @@ const Auth = () => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-
+  
     const endpoint = isLogin ? "/auth/login" : "/auth/register";
     const body = isLogin
       ? { email, password }
       : { username: email.split("@")[0], email, password };
-
+  
     try {
       const response = await fetch(`http://localhost:8080${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      const textData = await response.text();
-      try {
-        const jsonData = JSON.parse(textData);
-
-        if (response.ok) {
-          localStorage.setItem("token", jsonData.token);
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          navigate("/");
-        } else {
-          setError(jsonData.error || "Something went wrong");
-          setShakeEffect(true);
-          setTimeout(() => setShakeEffect(false), 300);
-        }
-      } catch {
-        if (response.ok) {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          navigate("/");
-        } else {
-          setError(textData || "Unknown error occurred");
-          setShakeEffect(true);
-          setTimeout(() => setShakeEffect(false), 300);
-        }
+  
+      const jsonData = await response.json();
+  
+      if (response.ok) {
+        localStorage.setItem("token", jsonData.token);
+        window.location.href = "/"; // ✅ Redirects to homepage
+      } else {
+        setError(jsonData.error || "Something went wrong");
+        setShakeEffect(true);
+        setTimeout(() => setShakeEffect(false), 300);
       }
     } catch {
       setError("Network error, please try again.");
@@ -65,6 +50,9 @@ const Auth = () => {
       setLoading(false);
     }
   };
+  
+
+  
 
   return (
     <div style={styles.container}>
