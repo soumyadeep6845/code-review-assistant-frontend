@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CodeImage from "../assets/CODE.png";
+import "./Auth.css";  // Import the CSS file
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -7,62 +9,66 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [shakeEffect, setShakeEffect] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
 
     const endpoint = isLogin ? "/auth/login" : "/auth/register";
-
     const body = isLogin 
-        ? { email, password }
-        : { username: email.split("@")[0], email, password }; 
+      ? { email, password }
+      : { username: email.split("@")[0], email, password };
 
     try {
-        const response = await fetch(`http://localhost:8080${endpoint}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-        });
+      const response = await fetch(`http://localhost:8080${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-        console.log("Raw Response:", response);
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // Introduce delay
+      
+      const textData = await response.text();
+      try {
+        const jsonData = JSON.parse(textData);
 
-        const textData = await response.text(); // Get response text
-        console.log("Response Text:", textData);
-
-        try {
-            const jsonData = JSON.parse(textData); // Parse JSON
-            console.log("Parsed JSON:", jsonData);
-
-            if (response.ok) {
-                localStorage.setItem("token", jsonData.token); // Store JWT token
-                console.log("Token stored, navigating...");
-                navigate("/"); // Redirect to Home
-            } else {
-                setError(jsonData.error || "Something went wrong");
-            }
-        } catch (err) {
-            console.log("JSON Parsing Error:", err);
-
-            if (response.ok) {
-                console.log("Response OK but no JSON, navigating...");
-                navigate("/"); // Redirect on success
-            } else {
-                setError(textData || "Unknown error occurred");
-            }
+        if (response.ok) {
+          localStorage.setItem("token", jsonData.token);
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // Add extra delay for better UX
+          navigate("/");
+        } else {
+          setError(jsonData.error || "Something went wrong");
+          setShakeEffect(true);
+          setTimeout(() => setShakeEffect(false), 300); // Reset shake effect
         }
-    } catch (err) {
-        console.error("Fetch error:", err);
-        setError("Network error, please try again.");
-    }      
-};
-
+      } catch {
+        if (response.ok) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          navigate("/");
+        } else {
+          setError(textData || "Unknown error occurred");
+          setShakeEffect(true);
+          setTimeout(() => setShakeEffect(false), 300);
+        }
+      }
+    } catch {
+      setError("Network error, please try again.");
+      setShakeEffect(true);
+      setTimeout(() => setShakeEffect(false), 300);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={styles.container}>
       <div style={styles.authBox}>
-        <h2 style={styles.heading}>{isLogin ? "Login" : "Register"}</h2>
-        {error && <p style={styles.errorText}>{error}</p>}
+        <img src={CodeImage} alt="Code Logo" style={styles.logo} />
+        <h2 style={styles.heading}>Code Review AI</h2>
+        {error && <p style={styles.errorText} className={shakeEffect ? "shake" : ""}>{error}</p>}
         <form onSubmit={handleSubmit} style={styles.form}>
           <input
             type="email"
@@ -80,8 +86,8 @@ const Auth = () => {
             required
             style={styles.input}
           />
-          <button type="submit" style={styles.button}>
-            {isLogin ? "Login" : "Register"}
+          <button type="submit" style={styles.button} disabled={loading}>
+            {loading ? <div className="loader"></div> : isLogin ? "Login" : "Register"}
           </button>
         </form>
         <p style={styles.toggleText}>
@@ -101,20 +107,26 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
-    background: "#f5f5f5",
+    width: "100vw",
+    background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
   },
   authBox: {
-    background: "#fff",
+    background: "rgb(43, 51, 51)",
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     width: "350px",
     textAlign: "center" as "center",
   },
+  logo: {
+    width: "100px",
+    height: "auto",
+    marginBottom: "-30px",
+  },
   heading: {
     fontSize: "24px",
     fontWeight: "bold",
-    marginBottom: "15px",
+    marginBottom: "23px",
   },
   errorText: {
     color: "red",
@@ -130,6 +142,7 @@ const styles = {
     padding: "10px",
     fontSize: "16px",
     border: "1px solid #ccc",
+    background: "#555",
     borderRadius: "5px",
     outline: "none",
   },
@@ -142,6 +155,10 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     transition: "background 0.3s ease",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "40px",
   },
   toggleText: {
     marginTop: "10px",
