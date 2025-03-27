@@ -2,10 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { apiClient } from "../api/ApiClient";
 import { CodeSubmission } from "../types";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
+import { java } from "@codemirror/lang-java";
+import { python } from "@codemirror/lang-python";
+import { cpp } from "@codemirror/lang-cpp";
+import { autocompletion } from "@codemirror/autocomplete";
 
 const CodeSubmissionForm = () => {
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("Java");
+  const [language, setLanguage] = useState("java");
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState<string | null>(null);
   const reviewRef = useRef<HTMLDivElement | null>(null);
@@ -23,6 +29,22 @@ const CodeSubmissionForm = () => {
     }
   }, [review]);
 
+  // Function to get the correct language mode
+  const getLanguageExtension = () => {
+    switch (language) {
+      case "javascript":
+        return javascript();
+      case "java":
+        return java();
+      case "python":
+        return python();
+      case "cpp":
+        return cpp();
+      default:
+        return java(); // Default fallback
+    }
+  };
+
   const handleSubmit = async () => {
     if (!code) {
       toast.error("Please enter some code before submitting.");
@@ -31,7 +53,7 @@ const CodeSubmissionForm = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("userId"); // Retrieve userId
+      const userId = localStorage.getItem("userId");
 
       if (!token) {
         toast.error("You must be logged in to submit code.");
@@ -74,44 +96,42 @@ const CodeSubmissionForm = () => {
       backgroundColor: "#1a1a1a",
       color: "white",
     }}>
+
       <div style={{
-        width: "40%",
-        height: "67%",
+        width: "50%",
+        height: "70%",
         backgroundColor: "#333",
-        marginTop: "-65px",
         padding: "20px",
         borderRadius: "10px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
         textAlign: "center",
-        animation: "fadeInUp 0.6s ease-out",
+        animation: "fadeInUp 0.6s ease-out"
       }}>
-        <h2 style={{ fontSize: "24px", marginBottom: "10px", marginTop: "-5px" }}>Submit Your Code</h2>
-        <textarea
+        <h2 style={{
+          fontSize: "24px",
+          marginBottom: "15px",
+          marginTop: "5px"
+        }}>Submit Your Code
+        </h2>
+
+        <CodeMirror
+          value={code}
+          height="300px"
+          extensions={[getLanguageExtension(), autocompletion()]}
+          theme="dark"
+          onChange={(value) => setCode(value)}
           style={{
-            width: "100%",
-            height: "310px",
-            padding: "10px",
-            backgroundColor: "#555",
-            color: "#d1d5db",
-            border: "none",
             borderRadius: "5px",
             marginBottom: "10px",
-            boxSizing: "border-box",
-            marginTop: "5px",
-            resize: "none"
+            textAlign: "left",
+            fontSize: "15px",
           }}
-          placeholder="Paste your code here..."
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
+          basicSetup={{
+            lineNumbers: true,
+          }}
         />
-        <style>
-          {`textarea::placeholder {
-              font-size: 15px;
-              color: #bbb;
-            }`
-          }
-        </style>
-        <div style={{ marginBottom: "10px" }}>
+
+        <div style={{ marginTop: "20px", marginBottom: "10px" }}>
           <label style={{ fontSize: "16px", fontWeight: "bold" }}>Select Language</label>
           <select
             style={{
@@ -126,72 +146,84 @@ const CodeSubmissionForm = () => {
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
           >
-            <option value="Java">Java</option>
-            <option value="Python">Python</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="TypeScript">TypeScript</option>
-            <option value="C++">C++</option>
-            <option value="Rust">Rust</option>
-            <option value="C#">C#</option>
-            <option value="C">C</option>
-            <option value="SQL">SQL (Structured Query Language)</option>
-            <option value="HQL">HQL (Hibernate Query Language)</option>
-            <option value="PLSQL">PL/SQL</option>
-            <option value="GraphQL">GraphQL </option>
-            <option value="Golang">Go(Golang)</option>
-            <option value="Kotlin">Kotlin</option>
-            <option value="Swift">Swift</option>
-            <option value="Dart">Dart</option>
-            <option value="Ruby">Ruby</option>
-            <option value="PHP">PHP</option>
-            <option value="Scala">Scala</option>
-            <option value="Haskell">Haskell</option>
-            <option value="Erlang">Erlang</option>
-            <option value="Closure">Closure</option>
+            <option value="java">Java</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="cpp">C++</option>
           </select>
         </div>
-        <button
-          style={{
-            width: "34%",
-            padding: "10px",
-            backgroundColor: "#4CAF50",
-            color: "white",
-            border: "none",
-            borderRadius: "25px",
-            cursor: "pointer",
-            fontSize: "16px",
-            fontWeight: "bold",
-            transition: "all 0.3s ease",
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = "#388E3C";
-            e.currentTarget.style.transform = "scale(1.05)";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = "#4CAF50";
-            e.currentTarget.style.transform = "scale(1)";
-          }}
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {loading ? "Reviewing..." : "Submit Code"}
-        </button>
-        {review && (
-          <div
-            ref={reviewRef}
+
+        <div style={{ display: "flex", justifyContent: "center"}}>
+          <button
             style={{
-              marginTop: "50px",
+              width: "40%",
               padding: "10px",
-              backgroundColor: "#444",
-              borderRadius: "5px",
-              textAlign: "left"
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "25px",
+              marginTop: "10px",
+              cursor: "pointer",
+              fontSize: "16px",
+              fontWeight: "bold",
+              transition: "all 0.3s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
             }}
+            onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#388E3C"; e.currentTarget.style.transform = "scale(1.05)"; }}
+            onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#4CAF50"; e.currentTarget.style.transform = "scale(1)"; }}
+            onClick={handleSubmit}
+            disabled={loading}
           >
+            {loading ? (
+              <>
+                <div className="spinner"></div>
+                Reviewing...
+              </>
+            ) : (
+              "Submit Code"
+            )}
+          </button>
+        </div>
+
+        <style>
+          {`
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid white;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  `}
+        </style>
+
+        {review && (
+          <div ref={reviewRef} style={{
+            marginTop: "30px",
+            padding: "10px",
+            backgroundColor: "#444",
+            borderRadius: "5px",
+            textAlign: "left"
+          }}>
             <h3 style={{ fontSize: "18px", fontWeight: "bold" }}>AI Review Feedback:</h3>
             <p>{review}</p>
           </div>
         )}
       </div>
+
       <style>
         {`
           @keyframes fadeInUp {
