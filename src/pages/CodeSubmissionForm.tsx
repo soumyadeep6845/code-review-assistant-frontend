@@ -100,6 +100,7 @@ const CodeSubmissionForm = () => {
       <div style={{
         width: "50%",
         height: "70%",
+        marginTop: "-40px",
         backgroundColor: "#333",
         padding: "20px",
         borderRadius: "10px",
