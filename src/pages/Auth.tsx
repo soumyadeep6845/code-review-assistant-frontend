@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react"; // Importing icons
+import { Eye, EyeOff } from "lucide-react";
 import CodeImage from "../assets/CODE.png";
 import "./Auth.css";
+import { jwtDecode } from "jwt-decode";
 
 const Auth = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
@@ -36,7 +35,13 @@ const Auth = () => {
   
       if (response.ok) {
         localStorage.setItem("token", jsonData.token);
-        window.location.href = "/"; // ✅ Redirects to homepage
+        localStorage.setItem("userId", jsonData.userId);
+  
+        // Decode JWT to get user info if needed
+        const decoded: any = jwtDecode(jsonData.token);
+        console.log("Logged in user ID:", decoded.userId);
+  
+        window.location.href = "/"; // Redirect to home page
       } else {
         setError(jsonData.error || "Something went wrong");
         setShakeEffect(true);

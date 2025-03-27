@@ -30,9 +30,26 @@ const CodeSubmissionForm = () => {
     }
     setLoading(true);
     try {
-      const userId = "user123"; //HAS TO BE CHANGED
-      const payload: CodeSubmission = { userId, code, language };
-      const response = await apiClient.post<CodeSubmission>("/submit", payload);
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId"); // Retrieve userId
+
+      if (!token) {
+        toast.error("You must be logged in to submit code.");
+        return;
+      }
+      if (!userId) {
+        toast.error("User ID is missing. Please log in again.");
+        return;
+      }
+
+      const payload: CodeSubmission = { code, language, userId };
+
+      const response = await apiClient.post("/submit", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (response.status === 200) {
         setReview(response.data.aiFeedback ?? "No feedback available.");
         toast.success("Code reviewed successfully!");
