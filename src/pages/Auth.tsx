@@ -36,11 +36,11 @@ const Auth = () => {
       if (response.ok) {
         localStorage.setItem("token", jsonData.token);
         localStorage.setItem("userId", jsonData.userId);
+        
   
         // Decode JWT to get user info if needed
         const decoded: any = jwtDecode(jsonData.token);
         console.log("Logged in user ID:", decoded.userId);
-  
         window.location.href = "/"; // Redirect to home page
       } else {
         setError(jsonData.error || "Something went wrong");
