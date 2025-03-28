@@ -65,12 +65,8 @@ const CodeSubmissionForm = () => {
       }
 
       const payload: CodeSubmission = { code, language, userId };
-
-      const response = await apiClient.post("/submit", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await apiClient.post("/api/code-review/submit", payload);
+      
 
       if (response.status === 200) {
         setReview(response.data.aiFeedback ?? "No feedback available.");
