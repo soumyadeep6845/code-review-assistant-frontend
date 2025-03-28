@@ -14,10 +14,10 @@ const isValidToken = (token: string) => {
 
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const hasChecked = useRef(false); // Prevent multiple requests
+  const hasChecked = useRef(false);
 
   useEffect(() => {
-    if (hasChecked.current) return; // Prevent re-execution
+    if (hasChecked.current) return; 
     const verifyToken = async () => {
       const token = localStorage.getItem("token");
       
