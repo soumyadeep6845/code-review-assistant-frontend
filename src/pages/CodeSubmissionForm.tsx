@@ -17,8 +17,10 @@ const CodeSubmissionForm = () => {
   const reviewRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
+  document.body.style.overflowY = "auto";
+  document.documentElement.style.overflowX = "hidden";
+  document.documentElement.style.overflowY = "auto";
   }, []);
 
   useEffect(() => {
