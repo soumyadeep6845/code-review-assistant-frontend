@@ -15,12 +15,16 @@ const CodeSubmissionForm = () => {
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState<string | null>(null);
   const reviewRef = useRef<HTMLDivElement | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const selectRef = useRef<HTMLSelectElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     document.body.style.overflowX = "hidden";
-  document.body.style.overflowY = "auto";
-  document.documentElement.style.overflowX = "hidden";
-  document.documentElement.style.overflowY = "auto";
+    document.body.style.overflowY = "auto";
+    document.documentElement.style.overflowX = "hidden";
+    document.documentElement.style.overflowY = "auto";
   }, []);
 
   useEffect(() => {
@@ -30,6 +34,18 @@ const CodeSubmissionForm = () => {
       }, 1000);
     }
   }, [review]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Function to get the correct language mode
   const getLanguageExtension = () => {
@@ -68,7 +84,7 @@ const CodeSubmissionForm = () => {
 
       const payload: CodeSubmission = { code, language, userId };
       const response = await apiClient.post("/api/code-review/submit", payload);
-      
+
 
       if (response.status === 200) {
         setReview(response.data.aiFeedback ?? "No feedback available.");
@@ -119,11 +135,16 @@ const CodeSubmissionForm = () => {
           extensions={[getLanguageExtension(), autocompletion()]}
           theme="dark"
           onChange={(value) => setCode(value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           style={{
-            borderRadius: "5px",
+            borderRadius: "10px",
             marginBottom: "10px",
             textAlign: "left",
             fontSize: "15px",
+            overflow: "hidden",
+            border: isFocused ? "1px solid #555" : "none",
+            transition: "border 0.2s ease-in-out",
           }}
           basicSetup={{
             lineNumbers: true,
@@ -132,27 +153,50 @@ const CodeSubmissionForm = () => {
 
         <div style={{ marginTop: "20px", marginBottom: "10px" }}>
           <label style={{ fontSize: "16px", fontWeight: "bold" }}>Select Language</label>
-          <select
-            style={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#555",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              marginTop: "5px"
-            }}
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          >
-            <option value="java">Java</option>
-            <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
-            <option value="cpp">C++</option>
-          </select>
+          <div style={{ position: "relative" }} ref={dropdownRef}>
+            <select
+              ref={selectRef}
+              style={{
+                width: "100%",
+                padding: "10px",
+                backgroundColor: "#555",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                marginTop: "9px",
+                cursor: "pointer",
+                appearance: "none",
+                position: "relative"
+              }}
+              value={language}
+              onChange={(e) => {
+                setLanguage(e.target.value);
+                setIsDropdownOpen(false);
+                setTimeout(() => selectRef.current?.blur(), 100);
+              }}
+              onMouseDown={() => setIsDropdownOpen(true)}
+              onBlur={() => setIsDropdownOpen(false)}
+            >
+              <option value="java">Java</option>
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="cpp">C++</option>
+            </select>
+            <span style={{
+              position: "absolute",
+              top: "60%",
+              right: "15px",
+              transform: isDropdownOpen ? "translateY(-50%) rotate(180deg)" : "translateY(-50%) rotate(0deg)",
+              transition: "transform 0.15s ease-in-out",
+              pointerEvents: "none",
+              fontSize: "13px"
+            }}>
+              ▲
+            </span>
+          </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center"}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             style={{
               width: "40%",

@@ -92,8 +92,8 @@ const CodeReview = () => {
             transition: transform 0.2s;
           }
 
-          .icon-container:nth-child(1) { right: 20px; } /* Logout */
-          .icon-container:nth-child(2) { right: 60px; } /* Home */
+          .icon-container:nth-child(1) { right: 35px; } /* Logout */
+          .icon-container:nth-child(2) { right: 75px; } /* Home */
 
           .icon-container:hover {
             transform: scale(0.9);
