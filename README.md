@@ -1,11 +1,11 @@
-# Code Review Assistant
+# AI Code Review Assistant
 
 ## 🚀 Overview
 This is the **frontend** of the Code Review Assistant, a web-based AI-powered tool that reviews and suggests improvements for code snippets. The application provides a user-friendly interface for submitting code, viewing AI feedback, and improving coding practices.
 
 ## 🛠 Tech Stack
 - **Framework:** React (TypeScript)
-- **UI Library:** Tailwind CSS
+- **UI Library:** Tailwind CSS, HTML, CSS
 - **State Management:** React (Context API)
 - **API Communication:** Axios
 - **Deployment:** Docker
@@ -17,7 +17,7 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 
 ### Prerequisites
 - Node.js (>= 18.x)
-- npm or yarn
+- npm (or yarn)
 
 ### 1️⃣ Clone the Repository
 ```sh
@@ -48,6 +48,8 @@ docker build -t code-review-frontend:dev .
 docker run -p 5173:5173 code-review-frontend:dev
 ```
 The app will be accessible at **http://localhost:5173**.
+
+---
 
 ## 📌 Features
 
