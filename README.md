@@ -8,9 +8,13 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 - **UI Library:** Tailwind CSS
 - **State Management:** React (Context API)
 - **API Communication:** Axios
-- **Deployment:** Docker, Kubernetes
+- **Deployment:** Docker
+> ℹ️ *Kubernetes may be used in the future for scalability.*
+
+---
 
 ## 📦 Installation & Setup
+
 ### Prerequisites
 - Node.js (>= 18.x)
 - npm or yarn
@@ -26,60 +30,58 @@ cd code-review-assistant-frontend
 npm install  # or yarn install
 ```
 
-### 3️⃣ Set Up Environment Variables
-Create a `.env` file in the root directory and configure the following:
-```env
-VITE_API_BASE_URL=http://localhost:8080/api  # Change this to your backend URL
-```
-
-### 4️⃣ Run the Development Server
+### 3️⃣ Run the Development Server (Locally)
 ```sh
 npm run dev  # or yarn dev
 ```
-The app should now be running on `http://localhost:5173`.
+The app should now be running on **http://localhost:5173**.
+>💡 Make sure the [backend](https://github.com/soumyadeep6845/code-review-assistant-backend) is up and running on http://localhost:8080.
+
+---
+
+## 🐳 Run with Docker
+
+To build and run the application using **Docker**:
+
+```sh
+docker build -t code-review-frontend:dev .
+docker run -p 5173:5173 code-review-frontend:dev
+```
+The app will be accessible at **http://localhost:5173**.
 
 ## 📌 Features
-✅ Submit code snippets for AI-based review\
-✅ View AI-generated feedback\
-✅ Responsive and modern UI using Tailwind CSS\
-✅ Secure API communication with the backend
+
+✅ Submit code snippets for AI-based review  
+✅ View AI-generated feedback  
+✅ Responsive and modern UI using Tailwind CSS  
+✅ Secure API communication with the backend  
+
+---
 
 ## 📜 Folder Structure
 ```
-📂 src
- ┣ 📂 components   # Reusable UI components
- ┣ 📂 pages        # Application pages
- ┣ 📂 services     # API calls and integrations
- ┣ 📜 App.tsx      # Main application entry
- ┣ 📜 main.tsx     # React root file
+ code-review-assistant-frontend/
+ ┣  src/
+ ┣  ┣  api/       # API components and integration
+ ┣  ┣  assets/    # Visual assets
+ ┣  ┣  pages/     # Application pages
+ ┣  ┣  utils/     # Routes
+ ┣  ┣  App.tsx    # Main application entry
+ ┣  ┣  main.tsx   # React root file
+ ┣  Dockerfile  # Docker configuration
+ ┣  README.md
 ```
-
-## 📌 Build & Deployment
-### Build the Application
-```sh
-npm run build  # or yarn build
-```
-
-### Deploy with Docker
-```sh
-docker build -t code-review-frontend .
-docker run -p 3000:3000 code-review-frontend
-```
-
-### Kubernetes Deployment
-Update your `deployment.yaml` and apply:
-```sh
-kubectl apply -f deployment.yaml
-```
-
-## 🎯 Contribution
-If you'd like to contribute, feel free to **fork** the repository and raise a PR with necessary changes.
-
-## 💚 Found this project interesting?
-If you found this project useful, then please consider leaving a :star: on Github. Thank you! 😄
-
-## 👨 Project Maintained By
-[Soumyadeep Das](https://www.linkedin.com/in/soumya0021/)
 
 ---
-🚀 Happy Coding! 🎉
+
+## 🎯 Contribution
+
+If you'd like to contribute, feel free to **fork** the repository, create a **new branch**, and raise a **pull request** with changes you deem necessary!
+
+## 💚 Found this project interesting?
+
+If you found this project useful, then please consider leaving a ⭐ on [GitHub](https://github.com/soumyadeep6845/code-review-assistant-frontend). Thank you! 😄
+
+## 👨 Project Maintained By
+
+[Soumyadeep Das](https://www.linkedin.com/in/soumya0021/)
