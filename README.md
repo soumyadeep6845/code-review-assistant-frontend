@@ -73,6 +73,7 @@ The app will be accessible at **http://localhost:5173**.
 ✅ View AI-generated feedback  
 ✅ Responsive and modern UI using Tailwind CSS  
 ✅ Secure API communication with the backend  
+✅ Containerised using Docker  
 
 ---
 
