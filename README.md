@@ -3,6 +3,22 @@
 ## 🚀 Overview
 This is the **frontend** of the Code Review Assistant, a web-based AI-powered tool that reviews and suggests improvements for code snippets. The application provides a user-friendly interface for submitting code, viewing AI feedback, and improving coding practices.
 
+## 📸 Application Screenshots
+
+### 🔹 Authentication Page
+![Auth](./screenshots/auth.png)
+
+### 🔹 Home Screen
+![Home](./screenshots/home.png)
+
+### 🔹 Code Review in Action
+![Review](./screenshots/codereview.png)
+![Feedback](./screenshots/codefeedback.png)
+
+### 🔹 Containerization (Docker)
+![Docker](./screenshots/dockerfrontend.png)
+
+
 ## 🛠 Tech Stack
 - **Framework:** React (TypeScript)
 - **UI Library:** Tailwind CSS, HTML, CSS
