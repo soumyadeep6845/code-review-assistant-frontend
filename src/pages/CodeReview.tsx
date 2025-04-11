@@ -43,7 +43,7 @@ const CodeReview = () => {
       }}
     >
       {/* Logout Icon */}
-      <div className="icon-container" onClick={handleLogout}>
+      <div className="icon-container-logout" onClick={handleLogout}>
         <LogOut size={23} />
         <span className="tooltip">Logout</span>
       </div>
@@ -92,11 +92,28 @@ const CodeReview = () => {
             transition: transform 0.2s;
           }
 
-          .icon-container:nth-child(1) { right: 35px; } /* Logout */
+          .icon-container-logout:nth-child(1) { right: 35px; } /* Logout */
           .icon-container:nth-child(2) { right: 75px; } /* Home */
 
           .icon-container:hover {
             transform: scale(0.9);
+            color: #1abc9c;
+          }
+
+          .icon-container-logout {
+            position: absolute;
+            top: 20px;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+          }
+
+          .icon-container-logout:hover {
+            transform: scale(0.9);
+            color:rgb(249, 38, 38);
           }
 
           .tooltip {
@@ -113,6 +130,10 @@ const CodeReview = () => {
           }
 
           .icon-container:hover .tooltip {
+            opacity: 1;
+          }
+
+          .icon-container-logout:hover .tooltip {
             opacity: 1;
           }
         `}
