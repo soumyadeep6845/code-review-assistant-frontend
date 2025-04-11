@@ -43,6 +43,12 @@ const NavBar: React.FC = () => {
             style={{
               ...styles.link,
               transform: hoveredLink === link.label ? "scale(0.9)" : "scale(1)",
+              color:
+                hoveredLink === link.label
+                  ? link.label === "Logout"
+                    ? "rgb(249, 38, 38)"
+                    : "#1abc9c"
+                  : "white",
               transition: "transform 0.15s ease, color 0.2s ease",
             }}
           >
