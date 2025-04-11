@@ -1,36 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
+import NavBar from "../components/NavBar";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [isLogoutHovered, setIsLogoutHovered] = useState(false);
 
   const handleGetStarted = () => {
     navigate("/review");
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove the JWT token
-    window.location.href = "/auth"; // Redirect to authentication page
-  };
-
   return (
     <div style={styles.container}>
-      {/* Logout Button */}
-      <button
-        style={
-          isLogoutHovered
-            ? { ...styles.logoutButton, ...styles.logoutButtonHovered }
-            : styles.logoutButton
-        }
-        onClick={handleLogout}
-        onMouseEnter={() => setIsLogoutHovered(true)}
-        onMouseLeave={() => setIsLogoutHovered(false)}
-      >
-        {isLogoutHovered ? "<< Logout" : "Logout"}
-      </button>
+      <NavBar />
       
       <div style={styles.headerContainer}>
         <h1 style={styles.heading}>Welcome to AI Code Review</h1>
@@ -59,18 +42,20 @@ const Home: React.FC = () => {
 
 const styles = {
   container: {
-    display: "flex" as "flex",
-    flexDirection: "column" as "column",
-    alignItems: "center" as "center",
-    justifyContent: "center" as "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     height: "100vh",
     width: "100vw",
     background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
     fontFamily: "'Playfair Display', serif",
-    textAlign: "center" as "center",
+    textAlign: "center",
     margin: 0,
-    position: "relative" as "relative",
-  },
+    position: "relative",
+    paddingTop: "70px",
+    boxSizing: "border-box",
+  } as React.CSSProperties,
   headerContainer: {
     marginBottom: "40px",
     animation: "fadeIn 0.5s ease-in",
