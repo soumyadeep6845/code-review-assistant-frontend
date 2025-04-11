@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../components/NavBar";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, color, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -69,7 +69,7 @@ const About: React.FC = () => {
             >
                 <h1 style={styles.heading}>About AI Code Review</h1>
                 <p style={styles.paragraph}>
-                    AI Code Review is your intelligent coding companion, designed to enhance code quality and promote better
+                    AI Code Review Assistant is your intelligent coding companion, designed to enhance code quality and promote better
                     programming practices through real-time feedback and smart suggestions.
                     Powered by advanced technologies such as{" "}
                     <span data-tooltip-id="spring-tooltip"
@@ -283,6 +283,40 @@ const About: React.FC = () => {
                         </motion.button>
                     </div>
                 </motion.div>
+
+                {/* CREATOR SECTION */}
+                <h2 style={styles.heading}>Meet the Creator</h2>
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                >
+                    <div style={styles.creatorCard}>
+                        <img
+                            src="/screenshots/creator.jpg"
+                            alt="Creator"
+                            style={styles.creatorImage}
+                        />
+                        <div style={styles.creatorInfo}>
+                            <h3 style={styles.creatorName}>Soumyadeep Das</h3>
+                            <p style={styles.creatorBio}>
+                                Full-stack developer passionate about clean code, scalable systems, and bringing AI into developer tools. I built the AI Code Review Assistant to help coders write better software, faster.
+                            </p>
+                            <p style={styles.creatorBio}>
+                                Got any questions? Feel free to contact me below.
+                            </p>
+                            <div style={styles.creatorLinks}>
+                                <a href="https://github.com/soumyadeep6845" target="_blank" rel="noopener noreferrer">GitHub</a>
+                                <span> | </span>
+                                <a href="https://linkedin.com/in/soumya0021" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                                <span> | </span>
+                                <a href="mailto:soumyadeep.dbsslg@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
             </motion.div>
         </div>
     );
@@ -325,6 +359,54 @@ const styles = {
         marginBottom: "20px",
         textAlign: "justify" as const,
     },
+
+    creatorCard: {
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: "#2f3640",
+        padding: "20px",
+        borderRadius: "1rem",
+        boxShadow: "0 8px 16px rgba(0, 0, 0, 0.25)",
+        marginBottom: "60px",
+        flexWrap: "wrap" as const,
+        gap: "20px",
+    } as React.CSSProperties,
+
+    creatorImage: {
+        width: "120px",
+        height: "120px",
+        borderRadius: "50%",
+        objectFit: "cover" as const,
+        border: "3px solid #1abc9c",
+    } as React.CSSProperties,
+
+    creatorInfo: {
+        flex: 1,
+        minWidth: "200px",
+    } as React.CSSProperties,
+
+    creatorName: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        color: "#1abc9c",
+        marginBottom: "8px",
+    } as React.CSSProperties,
+
+    creatorBio: {
+        fontSize: "15px",
+        color: "#ecf0f1",
+        marginBottom: "8px",
+        lineHeight: 1.6,
+    } as React.CSSProperties,
+
+    creatorLinks: {
+        fontSize: "14px",
+        color: "#1abc9c",
+        display: "flex",
+        gap: "6px",
+        flexWrap: "wrap" as const,
+    } as React.CSSProperties,
+
 
     comingSoonGrid: {
         display: "grid",
