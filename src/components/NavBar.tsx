@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
+  };
+
+  const navLinks = [
+    { label: "Home", path: "/" },
+    { label: "About", path: "/about" },
+    { label: "Review", path: "/review" },
+    { label: "Logout", path: "/logout" },
+  ];
+
+  const handleClick = (label: string) => {
+    if (label === "Logout") {
+      handleLogout();
+    } else {
+      const path = navLinks.find((link) => link.label === label)?.path;
+      if (path) navigate(path);
+    }
   };
 
   return (
@@ -17,18 +34,21 @@ const NavBar: React.FC = () => {
         </span>
       </div>
       <div style={styles.right}>
-        <span style={styles.link} onClick={() => navigate("/")}>
-          Home
-        </span>
-        <span style={styles.link} onClick={() => navigate("/about")}>
-          About
-        </span>
-        <span style={styles.link} onClick={() => navigate("/review")}>
-          Review
-        </span>
-        <span style={styles.link} onClick={handleLogout}>
-          Logout
-        </span>
+        {navLinks.map((link) => (
+          <span
+            key={link.label}
+            onClick={() => handleClick(link.label)}
+            onMouseEnter={() => setHoveredLink(link.label)}
+            onMouseLeave={() => setHoveredLink(null)}
+            style={{
+              ...styles.link,
+              transform: hoveredLink === link.label ? "scale(0.9)" : "scale(1)",
+              transition: "transform 0.15s ease, color 0.2s ease",
+            }}
+          >
+            {link.label}
+          </span>
+        ))}
       </div>
     </nav>
   );
@@ -71,7 +91,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: "pointer",
     fontSize: "16px",
     margin: "5px",
-    transition: "color 0.2s ease",
   },
 };
 

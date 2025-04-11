@@ -78,7 +78,7 @@ const styles = {
     animation: "fadeIn 1.5s ease-in",
   },
   button: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#1abc9c",
     color: "#fff",
     fontSize: "18px",
     padding: "15px 30px",
@@ -86,15 +86,15 @@ const styles = {
     borderRadius: "30px",
     cursor: "pointer",
     transition: "background-color 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
-    boxShadow: "0 0 10px rgba(76, 175, 80, 0.8)",
+    boxShadow: "0 0 10px rgba(26, 188, 156, 0.8)",
     animation: "slideInTop 1s ease-out",
     marginBottom: "15px",
   },
   buttonHovered: {
-    backgroundColor: "#388E3C",
+    backgroundColor: "#16a085", // darker shade of #1abc9c
     transform: "scale(1.1)",
-    boxShadow: "0 0 15px rgba(56, 142, 60, 1)",
-  },
+    boxShadow: "0 0 15px rgba(22, 160, 133, 1)",
+  },  
   logoutButton: {
     position: "absolute" as "absolute",
     top: "20px",

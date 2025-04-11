@@ -125,7 +125,8 @@ const CodeSubmissionForm = () => {
         <h2 style={{
           fontSize: "24px",
           marginBottom: "15px",
-          marginTop: "5px"
+          marginTop: "5px",
+          color: "#1abc9c",
         }}>Submit Your Code
         </h2>
 
@@ -152,7 +153,11 @@ const CodeSubmissionForm = () => {
         />
 
         <div style={{ marginTop: "20px", marginBottom: "10px" }}>
-          <label style={{ fontSize: "16px", fontWeight: "bold" }}>Select Language</label>
+          <label style={{
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "#1abc9c",
+          }}>Select Language</label>
           <div style={{ position: "relative" }} ref={dropdownRef}>
             <select
               ref={selectRef}
@@ -201,7 +206,7 @@ const CodeSubmissionForm = () => {
             style={{
               width: "40%",
               padding: "10px",
-              backgroundColor: "#4CAF50",
+              backgroundColor: "#1abc9c",
               color: "white",
               border: "none",
               borderRadius: "25px",
@@ -214,9 +219,18 @@ const CodeSubmissionForm = () => {
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
+              boxShadow: "0 0 10px rgba(26, 188, 156, 0.6)",
             }}
-            onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#388E3C"; e.currentTarget.style.transform = "scale(1.05)"; }}
-            onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#4CAF50"; e.currentTarget.style.transform = "scale(1)"; }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = "#16a085";
+              e.currentTarget.style.transform = "scale(1.05)";
+              e.currentTarget.style.boxShadow = "0 0 15px rgba(22, 160, 133, 0.9)";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = "#1abc9c";
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "0 0 10px rgba(26, 188, 156, 0.6)";
+            }}
             onClick={handleSubmit}
             disabled={loading}
           >
