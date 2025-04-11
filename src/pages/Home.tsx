@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
+  const name = localStorage.getItem("name") || "User";
 
   const handleGetStarted = () => {
     navigate("/review");
@@ -18,7 +19,7 @@ const Home: React.FC = () => {
       <NavBar />
       
       <div style={styles.headerContainer}>
-        <h1 style={styles.heading}>Welcome to AI Code Review</h1>
+        <h1 style={styles.heading}>Welcome, {name}!</h1>
         <p style={styles.subheading}>
           Enhance your coding skills with intelligent feedback powered by AI. Just submit your code and get detailed insights.
         </p>

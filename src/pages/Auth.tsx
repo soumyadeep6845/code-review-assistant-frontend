@@ -13,6 +13,8 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ const Auth = () => {
     const endpoint = isLogin ? "/auth/login" : "/auth/register";
     const body = isLogin
       ? { email, password }
-      : { username: email.split("@")[0], email, password };
+      : { username: email.split("@")[0], email, password, name };
 
     try {
       const response = await fetch(`http://localhost:8080${endpoint}`, {
@@ -41,6 +43,7 @@ const Auth = () => {
         // Decode JWT to get user info if needed
         const decoded: any = jwtDecode(jsonData.token);
         console.log("Logged in user ID:", decoded.userId);
+        localStorage.setItem("name", decoded.name || jsonData.name || name);
         window.location.href = "/"; // Redirect to home page
       } else {
         setError(jsonData.error || "Something went wrong");
@@ -71,6 +74,20 @@ const Auth = () => {
         <h2 style={styles.heading}>Code Review AI</h2>
         {error && <p style={styles.errorText} className={shakeEffect ? "shake" : ""}>{error}</p>}
         <form onSubmit={handleSubmit} style={styles.form}>
+
+          {!isLogin && (
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              style={{ ...styles.input, ...(name ? inputFocusStyle : {}) }}
+              onFocus={(e) => (e.target.style.boxShadow = inputFocusStyle.boxShadow)}
+              onBlur={(e) => (e.target.style.boxShadow = "none")}
+            />
+          )}
+
 
           <input
             type="email"
