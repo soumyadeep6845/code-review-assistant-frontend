@@ -18,26 +18,26 @@ const Auth = () => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-  
+
     const endpoint = isLogin ? "/auth/login" : "/auth/register";
     const body = isLogin
       ? { email, password }
       : { username: email.split("@")[0], email, password };
-  
+
     try {
       const response = await fetch(`http://localhost:8080${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-  
+
       const jsonData = await response.json();
-  
+
       if (response.ok) {
         localStorage.setItem("token", jsonData.token);
         localStorage.setItem("userId", jsonData.userId);
-        
-  
+
+
         // Decode JWT to get user info if needed
         const decoded: any = jwtDecode(jsonData.token);
         console.log("Logged in user ID:", decoded.userId);
@@ -55,9 +55,9 @@ const Auth = () => {
       setLoading(false);
     }
   };
-  
 
-  
+
+
 
   return (
     <div style={styles.container}>
@@ -78,6 +78,8 @@ const Auth = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            title="Please enter a valid email address"
             style={{ ...styles.input, ...(email ? inputFocusStyle : {}) }}
             onFocus={(e) => (e.target.style.boxShadow = inputFocusStyle.boxShadow)}
             onBlur={(e) => (e.target.style.boxShadow = "none")}
