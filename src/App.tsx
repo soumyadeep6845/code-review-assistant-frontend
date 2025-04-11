@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import { ToastContainer } from "react-toastify";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import About from "./pages/About";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/review" element={<CodeReview />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
