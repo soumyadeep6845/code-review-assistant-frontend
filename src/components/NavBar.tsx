@@ -74,6 +74,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     position: "fixed",
     top: 0,
     zIndex: 1000,
+    fontFamily: "'Playfair Display', serif",
   },
   left: {
     fontSize: "20px",

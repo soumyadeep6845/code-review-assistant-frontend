@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../components/NavBar";
-import { AnimatePresence, color, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -140,7 +140,7 @@ const About: React.FC = () => {
                 <hr className="my-8 border-gray-400" />
 
                 {/* APP PREVIEWS CAROUSEL*/}
-                <h2 style={styles.heading}>App Previews</h2>
+                <h2 style={styles.heading}>In-App Previews</h2>
                 <motion.div
                     ref={previewRef}
                     initial={{ opacity: 0, y: 40 }}
@@ -174,7 +174,7 @@ const About: React.FC = () => {
                 </motion.div>
 
                 {/* FAQs */}
-                <h2 style={styles.heading}>FAQs</h2>
+                <h2 style={styles.heading}>Frequently Asked Questions (FAQs)</h2>
                 <motion.div
                     ref={faqRef}
                     initial={{ opacity: 0, y: 40 }}
@@ -210,7 +210,7 @@ const About: React.FC = () => {
                 </motion.div>
 
                 {/* COMING SOON */}
-                <h2 style={styles.heading}>Coming Soon</h2>
+                <h2 style={styles.heading}>More features coming soon...</h2>
                 <motion.div
                     ref={comingSoonRef}
                     style={styles.comingSoonGrid}
@@ -243,7 +243,7 @@ const About: React.FC = () => {
                     <div style={styles.featureCard}>
                         <Settings size={30} style={styles.cardIcon} />
                         <h3 style={styles.cardTitle}>Custom Rules</h3>
-                        <p style={styles.cardText}>Define your own code quality rules to match your standards.</p>
+                        <p style={styles.cardText}>Define your own code quality rules to align with your standards and development goals.</p>
                     </div>
                     <div style={styles.featureCard}>
                         <ShieldPlus size={30} style={styles.cardIcon} />
@@ -279,13 +279,13 @@ const About: React.FC = () => {
                             }}
                             onClick={handleTryNow}
                         >
-                            Try It Now
+                            Start your first review
                         </motion.button>
                     </div>
                 </motion.div>
 
                 {/* CREATOR SECTION */}
-                <h2 style={styles.heading}>Meet the Creator</h2>
+                <h2 style={styles.heading}>✨ Meet the Creator ✨</h2>
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -304,7 +304,7 @@ const About: React.FC = () => {
                                 Full-stack developer passionate about clean code, scalable systems, and bringing AI into developer tools. I built the AI Code Review Assistant to help coders write better software, faster.
                             </p>
                             <p style={styles.creatorBio}>
-                                Got any questions? Feel free to contact me below.
+                                Got any questions? Feel free to contact me!
                             </p>
                             <div style={styles.creatorLinks}>
                                 <a href="https://github.com/soumyadeep6845" target="_blank" rel="noopener noreferrer">GitHub</a>

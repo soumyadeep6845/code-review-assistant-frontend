@@ -103,24 +103,29 @@ const CodeSubmissionForm = () => {
   return (
     <div style={{
       display: "flex",
+      flexDirection: "column", // Optional for stacking
       alignItems: "center",
       justifyContent: "center",
-      height: "100vh",
+      minHeight: "100vh", // Updated here
       width: "100vw",
-      backgroundColor: "#1a1a1a",
+      background: "linear-gradient(to bottom right, #2c3e50, #34495e)", // Keeps gradient consistent
       color: "white",
     }}>
+
 
       <div style={{
         width: "50%",
         height: "70%",
-        marginTop: "-40px",
+        marginTop: "80px",
+        paddingBottom: "35px",
         backgroundColor: "#333",
         padding: "20px",
         borderRadius: "10px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
         textAlign: "center",
-        animation: "fadeInUp 0.6s ease-out"
+        marginBottom: "40px",
+        animation: "fadeInUp 0.6s ease-out",
+        fontFamily: "'Playfair Display', serif",
       }}>
         <h2 style={{
           fontSize: "24px",
@@ -269,14 +274,27 @@ const CodeSubmissionForm = () => {
 
         {review && (
           <div ref={reviewRef} style={{
-            marginTop: "30px",
-            padding: "10px",
+            marginTop: "40px",
+            padding: "20px",
             backgroundColor: "#444",
-            borderRadius: "5px",
-            textAlign: "left"
+            borderRadius: "10px",
+            textAlign: "center",
+            marginBottom: "40px"
           }}>
-            <h3 style={{ fontSize: "18px", fontWeight: "bold" }}>AI Review Feedback:</h3>
-            <p>{review}</p>
+
+            <h3 style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "#1abc9c",
+            }}>AI Review Feedback</h3>
+            <div style={{ textAlign: "left", marginTop: "10px", whiteSpace: "pre-line" }}>
+              {review.split(/\d+\.\s/).filter(Boolean).map((point, index) => (
+                <p key={index} style={{ marginBottom: "8px" }}>
+                  {`${index + 1}. ${point.trim()}`}
+                </p>
+              ))}
+            </div>
+
           </div>
         )}
       </div>
