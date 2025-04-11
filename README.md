@@ -18,7 +18,7 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 ![Review](./screenshots/codereview.png)
 ![Feedback](./screenshots/codefeedback.png)
 
-### 🔹 Containerization (Docker)
+### 🔹 Containerization (Docker) - Frontend
 ![Docker](./screenshots/dockerfrontend.png)
 
 
