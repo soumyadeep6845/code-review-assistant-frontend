@@ -7,11 +7,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import {
     BrainCircuit,
-    Settings,
     GitBranch,
     Users,
     Languages,
     ShieldPlus,
+    Blocks,
 } from "lucide-react";
 import { useInView } from "framer-motion";
 
@@ -241,9 +241,9 @@ const About: React.FC = () => {
                         <p style={styles.cardText}>Generate boilerplate or test cases directly from your existing code.</p>
                     </div>
                     <div style={styles.featureCard}>
-                        <Settings size={30} style={styles.cardIcon} />
-                        <h3 style={styles.cardTitle}>Custom Rules</h3>
-                        <p style={styles.cardText}>Define your own code quality rules to align with your standards and development goals.</p>
+                        <Blocks size={30} style={styles.cardIcon} />
+                        <h3 style={styles.cardTitle}>IDE Integration</h3>
+                        <p style={styles.cardText}>Seamlessly integrate with your favorite IDEs like Visual Studio Code, IntelliJ IDEA, or Eclipse.</p>
                     </div>
                     <div style={styles.featureCard}>
                         <ShieldPlus size={30} style={styles.cardIcon} />

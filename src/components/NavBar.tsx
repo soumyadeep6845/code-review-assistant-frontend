@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
-  };
 
   const navLinks = [
     { label: "Home", path: "/" },
@@ -16,6 +13,11 @@ const NavBar: React.FC = () => {
     { label: "Review", path: "/review" },
     { label: "Logout", path: "/logout" },
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const handleClick = (label: string) => {
     if (label === "Logout") {
@@ -34,27 +36,46 @@ const NavBar: React.FC = () => {
         </span>
       </div>
       <div style={styles.right}>
-        {navLinks.map((link) => (
-          <span
-            key={link.label}
-            onClick={() => handleClick(link.label)}
-            onMouseEnter={() => setHoveredLink(link.label)}
-            onMouseLeave={() => setHoveredLink(null)}
-            style={{
-              ...styles.link,
-              transform: hoveredLink === link.label ? "scale(0.9)" : "scale(1)",
-              color:
-                hoveredLink === link.label
-                  ? link.label === "Logout"
-                    ? "rgb(249, 38, 38)"
-                    : "#1abc9c"
-                  : "white",
-              transition: "transform 0.15s ease, color 0.2s ease",
-            }}
-          >
-            {link.label}
-          </span>
-        ))}
+        {navLinks.map((link) => {
+          const isActive = location.pathname === link.path;
+          return (
+            <div
+              key={link.label}
+              onClick={() => handleClick(link.label)}
+              onMouseEnter={() => setHoveredLink(link.label)}
+              onMouseLeave={() => setHoveredLink(null)}
+              style={{
+                position: "relative",
+                margin: "0 12px",
+                cursor: "pointer",
+                fontSize: "16px",
+                color:
+                  hoveredLink === link.label
+                    ? link.label === "Logout"
+                      ? "rgb(249, 38, 38)"
+                      : "#1abc9c"
+                    : "white",
+              }}
+            >
+              <span style={{ paddingBottom: "4px" }}>{link.label}</span>
+              {isActive && (
+                <motion.div
+                  layoutId="underline"
+                  style={{
+                    position: "absolute",
+                    bottom: -17,
+                    left: 0,
+                    right: 0,
+                    height: "2px",
+                    backgroundColor: "#1abc9c",
+                    borderRadius: "2px",
+                  }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </nav>
   );
@@ -91,13 +112,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   right: {
     display: "flex",
     alignItems: "center",
-    gap: "20px",
-  },
-  link: {
-    color: "white",
-    cursor: "pointer",
-    fontSize: "16px",
-    margin: "5px",
+    gap: "10px",
   },
 };
 
