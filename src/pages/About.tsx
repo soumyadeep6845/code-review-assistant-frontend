@@ -283,6 +283,9 @@ const About: React.FC = () => {
                         </motion.button>
                     </div>
                 </motion.div>
+                
+                {/* -----------------HORIZONTAL DIVIDER----------------- */}
+                <hr className="my-8 border-gray-400" />
 
                 {/* CREATOR SECTION */}
                 <h2 style={styles.heading}>✨ Meet the Creator ✨</h2>

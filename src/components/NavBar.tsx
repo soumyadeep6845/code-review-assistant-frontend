@@ -32,7 +32,7 @@ const NavBar: React.FC = () => {
     <nav style={styles.navbar}>
       <div style={styles.left}>
         <span style={styles.logo} onClick={() => navigate("/")}>
-          AI Code Review
+          AI Code Review Assistant
         </span>
       </div>
       <div style={styles.right}>
