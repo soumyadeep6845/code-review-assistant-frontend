@@ -9,7 +9,10 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 ![Auth](./screenshots/auth.png)
 
 ### 🔹 Home Screen
-![Home](./screenshots/home.png)
+![Home](./screenshots/homescreen.png)
+
+### 🔹 About Screen
+![About](./screenshots/about.png)
 
 ### 🔹 Code Review in Action
 ![Review](./screenshots/codereview.png)
