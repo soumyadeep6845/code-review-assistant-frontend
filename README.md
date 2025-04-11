@@ -9,13 +9,13 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 ![Auth](./screenshots/auth.png)
 
 ### 🔹 Home Screen
-![Home](./screenshots/homescreen.png)
+![Home](./screenshots/homepage.png)
 
 ### 🔹 About Screen
-![About](./screenshots/about.png)
+![About](./screenshots/aboutpage.png)
 
 ### 🔹 Code Review in Action
-![Review](./screenshots/codereview.png)
+![Review](./screenshots/codereviewpage.png)
 ![Feedback](./screenshots/codefeedback.png)
 
 ### 🔹 Containerization (Docker) - Frontend
