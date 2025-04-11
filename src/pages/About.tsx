@@ -158,11 +158,11 @@ const About: React.FC = () => {
                             emulateTouch
                         >
                             <div>
-                                <img src="/screenshots/homescreen.png" alt="Home Page" />
+                                <img src="/screenshots/homepage.png" alt="Home Page" />
                                 <p className="legend">Home Page</p>
                             </div>
                             <div>
-                                <img src="/screenshots/codereview.png" alt="Code Review Page" />
+                                <img src="/screenshots/codereviewpage.png" alt="Code Review Page" />
                                 <p className="legend">Code Review</p>
                             </div>
                             <div>
@@ -283,7 +283,7 @@ const About: React.FC = () => {
                         </motion.button>
                     </div>
                 </motion.div>
-                
+
                 {/* -----------------HORIZONTAL DIVIDER----------------- */}
                 <hr className="my-8 border-gray-400" />
 
