@@ -13,6 +13,8 @@ const Home: React.FC = () => {
 
   return (
     <div style={styles.container}>
+
+      {/* Navigation Menu */}
       <NavBar />
       
       <div style={styles.headerContainer}>

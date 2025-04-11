@@ -38,14 +38,14 @@ const styles: { [key: string]: React.CSSProperties } = {
   navbar: {
     width: "100vw",
     height: "60px",
-    backgroundColor: "#111827", // Dark background
+    backgroundColor: "#111827",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "0 25px",
     boxSizing: "border-box",
     boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
-    position: "fixed", // Stays at the top
+    position: "fixed",
     top: 0,
     zIndex: 1000,
   },

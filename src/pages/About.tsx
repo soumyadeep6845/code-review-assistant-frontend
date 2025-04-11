@@ -60,7 +60,7 @@ const styles = {
         color: "#ecf0f1",
         paddingTop: "70px",
         boxSizing: "border-box" as const,
-        overflowX: "hidden", // ✅ Prevent horizontal scroll
+        overflowX: "hidden",
         position: "relative" as const,
     } as React.CSSProperties,
 
