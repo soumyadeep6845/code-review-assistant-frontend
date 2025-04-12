@@ -1,0 +1,70 @@
+.notfound-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f6f8fa, #e0e7ff);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .notfound-content {
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .notfound-title {
+    font-size: 120px;
+    font-weight: bold;
+    margin: 0;
+    color: #ff6b6b;
+    animation: float 2.5s ease-in-out infinite;
+  }
+  
+  .notfound-subtitle {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #555;
+  }
+  
+  .notfound-button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 10px;
+    background-color: #6366f1;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .notfound-button:hover {
+    background-color: #f6f8fa;
+    text-color: #4f46e5;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
