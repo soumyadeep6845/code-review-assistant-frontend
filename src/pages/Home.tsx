@@ -121,6 +121,11 @@ const styles = {
     bottom: "10px",
     width: "100%",
     textAlign: "center" as "center",
+    backgroundColor: "rgba(255, 255, 255, 0.05)", 
+    padding: "10px 0",
+    borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+    backdropFilter: "blur(4px)",
+    boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.2)",
   },
   copyright: {
     fontSize: "14px",

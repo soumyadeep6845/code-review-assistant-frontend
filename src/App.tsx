@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import About from "./pages/About";
+import Contact from "./pages/Contact"
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/review" element={<CodeReview />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
