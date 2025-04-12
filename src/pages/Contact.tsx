@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import "../App.css"
 
 const Contact: React.FC = () => {
     const formRef = useRef<HTMLFormElement>(null);
@@ -241,7 +242,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         borderTop: "2px solid transparent",
         borderRadius: "50%",
         animation: "spin 1s linear infinite",
-    },
+    },    
 
     successText: {
         color: "#4BB543",

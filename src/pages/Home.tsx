@@ -67,6 +67,7 @@ const styles = {
     fontSize: "36px",
     color: "#fff",
     marginBottom: "10px",
+    paddingBottom: "10px",
     fontWeight: "700",
     overflow: "hidden",
     whiteSpace: "nowrap",
