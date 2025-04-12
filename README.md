@@ -6,17 +6,20 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 ## 📸 Application Screenshots
 
 ### 🔹 Authentication Page
-![Auth](./screenshots/auth.png)
+![Auth](./screenshots/authscreen.png)
 
-### 🔹 Home Screen
-![Home](./screenshots/homepage.png)
+### 🔹 Home Page
+![Home](./screenshots/homescreen.png)
 
-### 🔹 About Screen
-![About](./screenshots/aboutpage.png)
+### 🔹 About Page
+![About](./screenshots/aboutscreen.png)
+
+### 🔹 Contact Page
+![Contact](./screenshots/contactscreen.png)
 
 ### 🔹 Code Review in Action
-![Review](./screenshots/codereviewpage.png)
-![Feedback](./screenshots/codefeedback.png)
+![Review](./screenshots/reviewscreen.png)
+![Feedback](./screenshots/feedbackscreen.png)
 
 ### 🔹 Containerization (Docker) - Frontend
 ![Docker](./screenshots/dockerfrontend.png)
@@ -24,9 +27,11 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 
 ## 🛠 Tech Stack
 - **Framework:** React (TypeScript)
-- **UI Library:** Tailwind CSS, HTML, CSS
+- **UI/Styling:** Tailwind CSS, HTML, CSS, Framer Motion, Google Fonts
 - **State Management:** React (Context API)
+- **Authentication:** JWT
 - **API Communication:** Axios
+- **Email Integration** EmailJS
 - **Deployment:** Docker
 > ℹ️ *Kubernetes may be used in the future for scalability.*
 
@@ -58,6 +63,38 @@ The app should now be running on **http://localhost:5173**.
 
 ---
 
+## 📧 EmailJS Setup (For Contact Page)
+
+To enable the contact form email functionality using **EmailJS**, follow these steps:
+
+### 🔐 Create a `.env` file
+
+Create a `.env` file in the root directory of your project and **ensure it is added to `.gitignore`** to avoid committing sensitive credentials.
+
+```env
+VITE_EMAILJS_SERVICE_ID=<your-service-id>
+VITE_EMAILJS_TEMPLATE_ID=<your-template-id>
+VITE_EMAILJS_PUBLIC_KEY=<your-public-key>
+```
+
+### 🛠 How to Obtain EmailJS Credentials
+
+1. Go to [EmailJS](https://www.emailjs.com/) and **create a free account**.
+2. In the dashboard:
+   - ➕ **Add a new Email Service** and connect it to a valid email (e.g., Gmail, Outlook).
+   - 📝 **Create a new Email Template** — make sure it includes all required fields that match your form input names.
+   - 🔑 Go to **Account** → Copy your **Public Key**.
+3. 🧩 Paste the above three values into your `.env` file.
+
+### 💡 Note
+
+Make sure that:
+
+- ✅ The form field names in your React component match the template variables you’ve added in the EmailJS template.
+- 🔄 Restart your app after making any changes to the `.env` file.
+
+---
+
 ## 🐳 Run with Docker
 
 To build and run the application using **Docker**:
@@ -83,14 +120,17 @@ The app will be accessible at **http://localhost:5173**.
 ## 📜 Folder Structure
 ```
  code-review-assistant-frontend/
+ ┣  screenshots/   # Application screenshots
  ┣  src/
- ┣  ┣  api/       # API components and integration
- ┣  ┣  assets/    # Visual assets
- ┣  ┣  pages/     # Application pages
- ┣  ┣  utils/     # Routes
- ┣  ┣  App.tsx    # Main application entry
- ┣  ┣  main.tsx   # React root file
- ┣  Dockerfile  # Docker configuration
+ ┣  ┣  api/        # API components and integration
+ ┣  ┣  assets/     # Visual assets
+ ┣  ┣  components/ # UI components
+ ┣  ┣  pages/      # Application pages
+ ┣  ┣  utils/      # Routes
+ ┣  ┣  App.tsx     # Main application entry
+ ┣  ┣  main.tsx    # React root file
+ ┣  Dockerfile     # Docker configuration
+ ┣  .env           # Stored secrets & keys
  ┣  README.md
 ```
 
