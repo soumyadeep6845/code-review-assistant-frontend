@@ -81,17 +81,17 @@ VITE_EMAILJS_PUBLIC_KEY=<your-public-key>
 
 1. Go to [EmailJS](https://www.emailjs.com/) and **create a free account**.
 2. In the dashboard:
-   - ➕ **Add a new Email Service** and connect it to a valid email (e.g., Gmail, Outlook).
-   - 📝 **Create a new Email Template** — make sure it includes all required fields that match your form input names.
-   - 🔑 Go to **Account** → Copy your **Public Key**.
-3. 🧩 Paste the above three values into your `.env` file.
+   - **Add a new Email Service** and connect it to a valid email (e.g., Gmail, Outlook).
+   - **Create a new Email Template** — make sure it includes all required fields that match your form input names.
+   - Go to **Account** → Copy your **Public Key**.
+3. Paste the above three values into your `.env` file.
 
 ### 💡 Note
 
 Make sure that:
 
-- ✅ The form field names in your React component match the template variables you’ve added in the EmailJS template.
-- 🔄 Restart your app after making any changes to the `.env` file.
+- The form field names in your React component match the template variables you’ve added in the EmailJS template.
+- Restart your app after making any changes to the `.env` file.
 
 ---
 
