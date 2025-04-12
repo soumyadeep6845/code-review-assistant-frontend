@@ -26,10 +26,13 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 
 
 ## 🛠 Tech Stack
-- **Framework:** React (TypeScript)
-- **UI/Styling:** Tailwind CSS, HTML, CSS, Framer Motion, Google Fonts
+- **Language:** Typescript
+- **Framework:** React
+- **UI/Styling:** Tailwind CSS, HTML, CSS, Google Fonts
+- **Animation:** Framer Motion
 - **State Management:** React (Context API)
-- **Authentication:** JWT
+- **Authentication:** JWT (custom implementation)
+- **Form Validation:** React + EmailJS Field Sync
 - **API Communication:** Axios
 - **Email Integration:** EmailJS
 - **Deployment:** Docker
