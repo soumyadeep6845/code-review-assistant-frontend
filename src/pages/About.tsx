@@ -158,16 +158,24 @@ const About: React.FC = () => {
                             emulateTouch
                         >
                             <div>
-                                <img src="/screenshots/homepage.png" alt="Home Page" />
-                                <p className="legend">Home Page</p>
+                                <img src="/screenshots/homescreen.png" alt="Home Page" />
+                                <p className="legend">Home</p>
                             </div>
                             <div>
-                                <img src="/screenshots/codereviewpage.png" alt="Code Review Page" />
+                                <img src="/screenshots/aboutscreen.png" alt="About Page" />
+                                <p className="legend">About</p>
+                            </div>
+                            <div>
+                                <img src="/screenshots/reviewscreen.png" alt="Code Review Page" />
                                 <p className="legend">Code Review</p>
                             </div>
                             <div>
-                                <img src="/screenshots/codefeedback.png" alt="Feedback Example" />
+                                <img src="/screenshots/feedbackscreen.png" alt="Feedback Example" />
                                 <p className="legend">AI Feedback</p>
+                            </div>
+                            <div>
+                                <img src="/screenshots/contactscreen.png" alt="Code Review Page" />
+                                <p className="legend">Contact</p>
                             </div>
                         </Carousel>
                     </div>
