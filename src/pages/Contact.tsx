@@ -37,11 +37,11 @@ const Contact: React.FC = () => {
 
         emailjs
             .sendForm(
-                "service_3z7pm19",
-                "template_9sxkafv",
+                import.meta.env.VITE_EMAILJS_SERVICE_ID!,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID!,
                 formRef.current!,
                 {
-                    publicKey: "HYZ5WB-quuq4sBNZJ",
+                    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY!,
                 }
             )
             .then(
