@@ -33,7 +33,6 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 - **API Communication:** Axios
 - **Email Integration:** EmailJS
 - **Deployment:** Docker
-> ℹ️ *Kubernetes may be used in the future for scalability.*
 
 ---
 
