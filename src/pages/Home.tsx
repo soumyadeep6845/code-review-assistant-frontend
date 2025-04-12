@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+import "./Home.css";
 import NavBar from "../components/NavBar";
 
 const Home: React.FC = () => {
@@ -14,17 +14,18 @@ const Home: React.FC = () => {
 
   return (
     <div style={styles.container}>
-
       {/* Navigation Menu */}
       <NavBar />
-      
+
       <div style={styles.headerContainer}>
-        <h1 style={styles.heading}>Welcome, {name}!</h1>
+        <h1 style={styles.heading}>
+          <TypewriterText text={`Welcome, ${name}!`} />
+        </h1>
         <p style={styles.subheading}>
           Enhance your coding skills with intelligent feedback powered by AI. Just submit your code and get detailed insights.
         </p>
       </div>
-      
+
       {/* Get Started Button */}
       <button
         style={isHovered ? { ...styles.button, ...styles.buttonHovered } : styles.button}
@@ -34,8 +35,8 @@ const Home: React.FC = () => {
       >
         {isHovered ? "Get Started >>" : "Get Started"}
       </button>
-      
-      {/* Copyright Notice */}
+
+      {/* Copyright */}
       <div style={styles.footer}>
         <p style={styles.copyright}>© 2025 Soumyadeep Das</p>
       </div>
@@ -61,14 +62,14 @@ const styles = {
   } as React.CSSProperties,
   headerContainer: {
     marginBottom: "40px",
-    animation: "fadeIn 0.5s ease-in",
   },
   heading: {
     fontSize: "36px",
     color: "#fff",
     marginBottom: "10px",
     fontWeight: "700",
-    animation: "fadeIn 1s ease-in",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
   },
   subheading: {
     fontSize: "18px",
@@ -76,7 +77,6 @@ const styles = {
     lineHeight: "1.5",
     maxWidth: "500px",
     margin: "0 auto",
-    animation: "fadeIn 1.5s ease-in",
   },
   button: {
     backgroundColor: "#1abc9c",
@@ -88,14 +88,13 @@ const styles = {
     cursor: "pointer",
     transition: "background-color 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
     boxShadow: "0 0 10px rgba(26, 188, 156, 0.8)",
-    animation: "slideInTop 1s ease-out",
     marginBottom: "15px",
   },
   buttonHovered: {
-    backgroundColor: "#16a085", // darker shade of #1abc9c
+    backgroundColor: "#16a085",
     transform: "scale(1.1)",
     boxShadow: "0 0 15px rgba(22, 160, 133, 1)",
-  },  
+  },
   logoutButton: {
     position: "absolute" as "absolute",
     top: "20px",
@@ -109,7 +108,6 @@ const styles = {
     cursor: "pointer",
     transition: "background-color 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease",
     boxShadow: "0 0 10px rgba(231, 76, 60, 0.8)",
-    animation: "fadeIn 1.5s ease-in",
   },
   logoutButtonHovered: {
     backgroundColor: "#C0392B",
@@ -121,7 +119,7 @@ const styles = {
     bottom: "10px",
     width: "100%",
     textAlign: "center" as "center",
-    backgroundColor: "rgba(255, 255, 255, 0.05)", 
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     padding: "10px 0",
     borderTop: "1px solid rgba(255, 255, 255, 0.1)",
     backdropFilter: "blur(4px)",
@@ -132,6 +130,29 @@ const styles = {
     color: "#fff",
     margin: "0",
   },
+};
+
+const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  React.useEffect(() => {
+    if (index < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text.charAt(index));
+        setIndex(prev => prev + 1);
+      }, 40);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [index, text]);
+
+  return (
+    <span className="typewriter-js">
+      {displayedText}
+      <span className="cursor"><pre>  </pre></span>
+    </span>
+  );
 };
 
 export default Home;

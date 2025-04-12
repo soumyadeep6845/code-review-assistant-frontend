@@ -1,0 +1,24 @@
+.typewriter-js {
+    display: inline;
+    color: white;
+  }
+  
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 35px;
+    margin-left: 2px;
+    background-color: white;
+    animation: blinkCursor 1s steps(1) infinite;
+    vertical-align: bottom;
+  }
+  
+  @keyframes blinkCursor {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
