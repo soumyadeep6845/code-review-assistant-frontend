@@ -1,4 +1,8 @@
-# AI Code Review Assistant
+<h1 align="center">AI Code Review Assistant</h1>
+<p align="center">
+   <img src="./screenshots/maingif.gif" alt="Logo" width="400" height="400"/>
+</p>
+<!-- PROJECT LOGO -->
 
 ## 🚀 Overview
 This is the **frontend** of the Code Review Assistant, a web-based AI-powered tool that reviews and suggests improvements for code snippets. The application provides a user-friendly interface for submitting code, viewing AI feedback, and improving coding practices.
