@@ -48,6 +48,7 @@ This is the **frontend** of the Code Review Assistant, a web-based AI-powered to
 ### Prerequisites
 - Node.js (>= 18.x)
 - npm (or yarn)
+- Axios
 
 ### 1️⃣ Clone the Repository
 ```sh
