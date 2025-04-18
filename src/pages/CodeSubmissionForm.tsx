@@ -59,7 +59,7 @@ const CodeSubmissionForm = () => {
       case "cpp":
         return cpp();
       default:
-        return java(); // Default fallback
+        return java();
     }
   };
 
@@ -103,12 +103,12 @@ const CodeSubmissionForm = () => {
   return (
     <div style={{
       display: "flex",
-      flexDirection: "column", // Optional for stacking
+      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      minHeight: "100vh", // Updated here
+      minHeight: "100vh",
       width: "100vw",
-      background: "linear-gradient(to bottom right, #2c3e50, #34495e)", // Keeps gradient consistent
+      background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
       color: "white",
     }}>
 
