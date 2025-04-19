@@ -40,8 +40,9 @@ const NavBar: React.FC = () => {
         {navLinks.map((link) => {
           const isActive = location.pathname === link.path;
           return (
-            <div
+            <motion.div
               key={link.label}
+              whileTap={{ scale: 0.9 }}
               onClick={() => handleClick(link.label)}
               onMouseEnter={() => setHoveredLink(link.label)}
               onMouseLeave={() => setHoveredLink(null)}
@@ -74,7 +75,7 @@ const NavBar: React.FC = () => {
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -92,7 +93,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
     padding: "0 25px",
     boxSizing: "border-box",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.4)",
     position: "fixed",
     top: 0,
     zIndex: 1000,
