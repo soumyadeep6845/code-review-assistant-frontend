@@ -149,7 +149,7 @@ If you'd like to contribute, feel free to **fork** the repository, create a **ne
 
 ## 💚 Found this project interesting?
 
-If you found this project useful, then please consider leaving a ⭐ on [GitHub](https://github.com/soumyadeep6845/code-review-assistant-frontend). Thank you! 😄
+If you found this project useful, please do consider leaving a ⭐ on [GitHub](https://github.com/soumyadeep6845/code-review-assistant-frontend). Thank you! 😄
 
 ## 👨 Project Maintained By
 
