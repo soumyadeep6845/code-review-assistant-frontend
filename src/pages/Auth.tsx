@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import CodeImage from "../assets/CODE.png";
 import "./Auth.css";
-import { jwtDecode } from "jwt-decode";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +14,6 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -24,7 +22,7 @@ const Auth = () => {
     const endpoint = isLogin ? "/auth/login" : "/auth/register";
     const body = isLogin
       ? { email, password }
-      : { username: email.split("@")[0], email, password, name };
+      : { username: name, email, password };
 
     try {
       const response = await fetch(`http://localhost:8080${endpoint}`, {
@@ -38,13 +36,8 @@ const Auth = () => {
       if (response.ok) {
         localStorage.setItem("token", jsonData.token);
         localStorage.setItem("userId", jsonData.userId);
-
-
-        // Decode JWT to get user info if needed
-        const decoded: any = jwtDecode(jsonData.token);
-        console.log("Logged in user ID:", decoded.userId);
-        localStorage.setItem("name", decoded.name || jsonData.name || name);
-        window.location.href = "/"; // Redirect to home page
+        localStorage.setItem("name", jsonData.username);
+        window.location.href = "/";
       } else {
         setError(jsonData.error || "Something went wrong");
         setShakeEffect(true);
@@ -59,23 +52,26 @@ const Auth = () => {
     }
   };
 
-
-
-
   return (
     <div style={styles.container}>
       <motion.div
         layout
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ layout: { duration: 0.5 }, opacity: { duration: 0.8, ease: "easeOut" } }}
+        transition={{
+          layout: { duration: 0.5 },
+          opacity: { duration: 0.8, ease: "easeOut" },
+        }}
         style={styles.authBox}
       >
         <img src={CodeImage} alt="Code Logo" style={styles.logo} />
         <h2 style={styles.heading}>Code Review AI</h2>
-        {error && <p style={styles.errorText} className={shakeEffect ? "shake" : ""}>{error}</p>}
+        {error && (
+          <p style={styles.errorText} className={shakeEffect ? "shake" : ""}>
+            {error}
+          </p>
+        )}
         <form onSubmit={handleSubmit} style={styles.form}>
-
           {/* Name (only for Register) */}
           <AnimatePresence mode="wait">
             {!isLogin && (
@@ -93,10 +89,14 @@ const Auth = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  onFocus={(e) => e.currentTarget.parentElement?.classList.add("focused")}
+                  onFocus={(e) =>
+                    e.currentTarget.parentElement?.classList.add("focused")
+                  }
                   onBlur={(e) => {
                     if (!e.currentTarget.value) {
-                      e.currentTarget.parentElement?.classList.remove("focused");
+                      e.currentTarget.parentElement?.classList.remove(
+                        "focused",
+                      );
                     }
                   }}
                 />
@@ -120,7 +120,9 @@ const Auth = () => {
               required
               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
               title="Please enter a valid email address."
-              onFocus={(e) => e.currentTarget.parentElement?.classList.add("focused")}
+              onFocus={(e) =>
+                e.currentTarget.parentElement?.classList.add("focused")
+              }
               onBlur={(e) => {
                 if (!e.currentTarget.value) {
                   e.currentTarget.parentElement?.classList.remove("focused");
@@ -143,7 +145,9 @@ const Auth = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              onFocus={(e) => e.currentTarget.parentElement?.classList.add("focused")}
+              onFocus={(e) =>
+                e.currentTarget.parentElement?.classList.add("focused")
+              }
               onBlur={(e) => {
                 if (!e.currentTarget.value) {
                   e.currentTarget.parentElement?.classList.remove("focused");
@@ -158,14 +162,23 @@ const Auth = () => {
               tabIndex={-1}
               onMouseDown={(e) => e.preventDefault()}
             >
-              {showPassword ? <EyeOff size={17} color="#fff" /> : <Eye size={17} color="#fff" />}
+              {showPassword ? (
+                <EyeOff size={17} color="#fff" />
+              ) : (
+                <Eye size={17} color="#fff" />
+              )}
             </button>
           </motion.div>
 
           <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? <div className="loader"></div> : isLogin ? "Login" : "Register"}
+            {loading ? (
+              <div className="loader"></div>
+            ) : isLogin ? (
+              "Login"
+            ) : (
+              "Register"
+            )}
           </button>
-
         </form>
         <p style={styles.toggleText}>
           {isLogin ? "Don't have an account?" : "Already have an account?"}
@@ -194,7 +207,6 @@ const styles = {
     boxShadow: "0px 0px 20px rgba(0, 255, 150, 0.1)",
     width: "350px",
     textAlign: "center" as "center",
-    
   },
   logo: {
     width: "80px",

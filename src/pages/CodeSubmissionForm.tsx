@@ -37,7 +37,10 @@ const CodeSubmissionForm = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -63,6 +66,53 @@ const CodeSubmissionForm = () => {
     }
   };
 
+  const pollReviewStatus = async (submissionId: number, token: string) => {
+    const maxAttempts = 30;
+    const pollingInterval = 2000;
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        const response = await apiClient.get(
+          `/api/code-review/${submissionId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        const submission = response.data;
+
+        console.log("Review status:", submission.status);
+
+        if (submission.status === "COMPLETED") {
+          setReview(submission.aiFeedback ?? "No feedback available.");
+
+          toast.success("Code review completed!");
+
+          return;
+        }
+
+        if (submission.status === "FAILED") {
+          toast.error("Code review failed. Please try again later.");
+
+          return;
+        }
+
+        // Still PROCESSING
+        await new Promise((resolve) => setTimeout(resolve, pollingInterval));
+      } catch (error) {
+        console.error("Error checking review status:", error);
+
+        toast.error("Failed to check review status.");
+
+        return;
+      }
+    }
+
+    toast.error("Code review is taking longer than expected.");
+  };
+
   const handleSubmit = async () => {
     if (!code) {
       toast.error("Please enter some code before submitting.");
@@ -82,57 +132,80 @@ const CodeSubmissionForm = () => {
         return;
       }
 
-      const payload: CodeSubmission = { code, language, userId };
+      const payload: CodeSubmission = {
+        code,
+        language,
+        userId,
+      };
+
       const response = await apiClient.post("/api/code-review/submit", payload);
 
+      if (response.status === 202) {
+        setReview(null);
 
-      if (response.status === 200) {
-        setReview(response.data.aiFeedback ?? "No feedback available.");
-        toast.success("Code reviewed successfully!");
+        const submissionId = response.data.submissionId;
+
+        if (!submissionId) {
+          toast.error("Submission ID was not returned by the server.");
+          return;
+        }
+
+        toast.success(
+          "Code submitted successfully! Your review is being processed.",
+        );
+
+        console.log("Kafka request accepted. Submission ID:", submissionId);
+
+        await pollReviewStatus(submissionId, token);
       } else {
         toast.error("Unexpected response from server.");
       }
     } catch (error) {
       console.error("Error submitting code:", error);
-      toast.error("Failed to get review. Please try again.");
+      toast.error("Failed to submit code. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      minHeight: "100vh",
-      width: "100vw",
-      background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
-      color: "white",
-    }}>
-
-
-      <div style={{
-        width: "50%",
-        height: "70%",
-        marginTop: "80px",
-        paddingBottom: "35px",
-        backgroundColor: "#333",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-        textAlign: "center",
-        marginBottom: "40px",
-        animation: "fadeInUp 0.6s ease-out",
-        fontFamily: "'Playfair Display', serif",
-      }}>
-        <h2 style={{
-          fontSize: "24px",
-          marginBottom: "15px",
-          marginTop: "5px",
-          color: "#1abc9c",
-        }}>Submit Your Code
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        width: "100vw",
+        background: "linear-gradient(to bottom right, #2c3e50, #34495e)",
+        color: "white",
+      }}
+    >
+      <div
+        style={{
+          width: "50%",
+          height: "70%",
+          marginTop: "80px",
+          paddingBottom: "35px",
+          backgroundColor: "#333",
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+          textAlign: "center",
+          marginBottom: "40px",
+          animation: "fadeInUp 0.6s ease-out",
+          fontFamily: "'Playfair Display', serif",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "24px",
+            marginBottom: "15px",
+            marginTop: "5px",
+            color: "#1abc9c",
+          }}
+        >
+          Submit Your Code
         </h2>
 
         <CodeMirror
@@ -158,11 +231,15 @@ const CodeSubmissionForm = () => {
         />
 
         <div style={{ marginTop: "20px", marginBottom: "10px" }}>
-          <label style={{
-            fontSize: "16px",
-            fontWeight: "bold",
-            color: "#1abc9c",
-          }}>Select Language</label>
+          <label
+            style={{
+              fontSize: "16px",
+              fontWeight: "bold",
+              color: "#1abc9c",
+            }}
+          >
+            Select Language
+          </label>
           <div style={{ position: "relative" }} ref={dropdownRef}>
             <select
               ref={selectRef}
@@ -176,7 +253,7 @@ const CodeSubmissionForm = () => {
                 marginTop: "9px",
                 cursor: "pointer",
                 appearance: "none",
-                position: "relative"
+                position: "relative",
               }}
               value={language}
               onChange={(e) => {
@@ -192,15 +269,19 @@ const CodeSubmissionForm = () => {
               <option value="python">Python</option>
               <option value="cpp">C++</option>
             </select>
-            <span style={{
-              position: "absolute",
-              top: "60%",
-              right: "15px",
-              transform: isDropdownOpen ? "translateY(-50%) rotate(180deg)" : "translateY(-50%) rotate(0deg)",
-              transition: "transform 0.15s ease-in-out",
-              pointerEvents: "none",
-              fontSize: "13px"
-            }}>
+            <span
+              style={{
+                position: "absolute",
+                top: "60%",
+                right: "15px",
+                transform: isDropdownOpen
+                  ? "translateY(-50%) rotate(180deg)"
+                  : "translateY(-50%) rotate(0deg)",
+                transition: "transform 0.15s ease-in-out",
+                pointerEvents: "none",
+                fontSize: "13px",
+              }}
+            >
               ▲
             </span>
           </div>
@@ -229,12 +310,14 @@ const CodeSubmissionForm = () => {
             onMouseOver={(e) => {
               e.currentTarget.style.backgroundColor = "#16a085";
               e.currentTarget.style.transform = "scale(1.05)";
-              e.currentTarget.style.boxShadow = "0 0 15px rgba(22, 160, 133, 0.9)";
+              e.currentTarget.style.boxShadow =
+                "0 0 15px rgba(22, 160, 133, 0.9)";
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.backgroundColor = "#1abc9c";
               e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow = "0 0 10px rgba(26, 188, 156, 0.6)";
+              e.currentTarget.style.boxShadow =
+                "0 0 10px rgba(26, 188, 156, 0.6)";
             }}
             onClick={handleSubmit}
             disabled={loading}
@@ -242,7 +325,7 @@ const CodeSubmissionForm = () => {
             {loading ? (
               <>
                 <div className="spinner"></div>
-                Reviewing...
+                Submitting...
               </>
             ) : (
               "Submit Code"
@@ -273,28 +356,42 @@ const CodeSubmissionForm = () => {
         </style>
 
         {review && (
-          <div ref={reviewRef} style={{
-            marginTop: "40px",
-            padding: "20px",
-            backgroundColor: "#444",
-            borderRadius: "10px",
-            textAlign: "center",
-            marginBottom: "40px"
-          }}>
-
-            <h3 style={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              color: "#1abc9c",
-            }}>AI Review Feedback</h3>
-            <div style={{ textAlign: "left", marginTop: "10px", whiteSpace: "pre-line" }}>
-              {review.split(/\d+\.\s/).filter(Boolean).map((point, index) => (
-                <p key={index} style={{ marginBottom: "8px" }}>
-                  {`${index + 1}. ${point.trim()}`}
-                </p>
-              ))}
+          <div
+            ref={reviewRef}
+            style={{
+              marginTop: "40px",
+              padding: "20px",
+              backgroundColor: "#444",
+              borderRadius: "10px",
+              textAlign: "center",
+              marginBottom: "40px",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "18px",
+                fontWeight: "bold",
+                color: "#1abc9c",
+              }}
+            >
+              AI Review Feedback
+            </h3>
+            <div
+              style={{
+                textAlign: "left",
+                marginTop: "10px",
+                whiteSpace: "pre-line",
+              }}
+            >
+              {review
+                .split(/\d+\.\s/)
+                .filter(Boolean)
+                .map((point, index) => (
+                  <p key={index} style={{ marginBottom: "8px" }}>
+                    {`${index + 1}. ${point.trim()}`}
+                  </p>
+                ))}
             </div>
-
           </div>
         )}
       </div>
