@@ -8,7 +8,6 @@ const NavBar: React.FC = () => {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
-
   const navLinks = [
     { label: "Home", path: "/" },
     { label: "About", path: "/about" },
@@ -19,6 +18,8 @@ const NavBar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("name");
     window.location.href = "/login";
   };
 
@@ -30,7 +31,6 @@ const NavBar: React.FC = () => {
       if (path) navigate(path);
     }
   };
-
 
   return (
     <>
@@ -106,7 +106,10 @@ const NavBar: React.FC = () => {
                 <motion.button
                   onClick={handleLogout}
                   style={styles.confirmButton}
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 12px rgba(231, 76, 60, 0.6)" }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 0 12px rgba(231, 76, 60, 0.6)",
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Yes, Logout
@@ -114,7 +117,10 @@ const NavBar: React.FC = () => {
                 <motion.button
                   onClick={() => setShowLogoutDialog(false)}
                   style={styles.cancelButton}
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 12px rgba(26, 188, 156, 0.6)" }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 0 12px rgba(26, 188, 156, 0.6)",
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Cancel
